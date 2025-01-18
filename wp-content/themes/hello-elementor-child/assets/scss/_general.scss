@@ -1,0 +1,36 @@
+body {
+    line-height: 1.5 !important;
+}
+
+.elementor-widget-text-editor .elementor-widget-container>*:last-child {
+    margin: 0px !important;
+}
+
+.elementor-button-link {
+
+    .elementor-button-icon,
+    .elementor-button-text {
+        display: flex !important;
+    }
+
+    .elementor-button-icon svg {
+        width: auto;
+    }
+
+    .elementor-button-content-wrapper {
+        align-items: center !important;
+    }
+}
+
+.elementor-widget-icon-list {
+    .elementor-icon-list-icon {
+        svg {
+            margin: 0px !important;
+        }
+    }
+
+    .elementor-icon-list-text {
+        padding: 0px !important;
+        margin: 0px !important;
+    }
+}
