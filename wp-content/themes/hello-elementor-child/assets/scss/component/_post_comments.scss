@@ -1,0 +1,157 @@
+.comment-form {
+	display: flex;
+	flex-wrap: wrap;
+	// flex-direction: column;
+	gap: 32px; /* Khoảng cách giữa các phần */
+}
+
+.comment-form .comment-notes {
+	order: -2;
+	display: block;
+	width: 100%;
+	//
+	font-size: 14px;
+	color: #666;
+}
+
+.comment-form .comment-form-author,
+.comment-form .comment-form-email {
+	display: inline-block;
+	width: calc(50% - 16px);
+}
+
+.comment-form .comment-form-author {
+	order: -1;
+}
+
+.comment-form .comment-form-email {
+	order: 1;
+}
+
+.comment-form .comment-form-comment {
+	order: 3;
+	width: 100%;
+	//
+	display: flex;
+	flex-direction: column;
+}
+
+.comment-form .comment-form-url {
+	display: none;
+}
+
+.comment-form .comment-form-cookies-consent {
+	order: 2;
+	//
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	//
+	padding: 9px 16px;
+	background: #f9f9f9;
+	border: 1px solid #d1d1d1;
+	border-radius: 12px;
+}
+
+.comment-form .form-submit {
+	order: 4;
+	//
+	display: flex;
+	justify-content: center;
+}
+
+.comment-form textarea,
+.comment-form input[type="text"],
+.comment-form input[type="email"],
+.comment-form input[type="url"] {
+	width: 100%;
+	background-color: #f9f9f9;
+	padding: 11px 21px 12px 16px;
+	font-size: 14px;
+	border: 1px solid #d1d1d1;
+	border-radius: 12px;
+}
+
+.comment-form textarea {
+	min-height: 150px;
+	resize: vertical;
+}
+
+.comment-form .form-submit input[type="submit"] {
+	background: #6a983c;
+	color: #fff;
+	border: 2px solid #46760a;
+	padding: 12.5px 48px;
+	//
+	font-size: 16px;
+	//styleName: Button/Default;
+	font-family: "Poppins";
+	font-size: 15px;
+	font-weight: 700;
+
+	border-radius: 12px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.comment-form .form-submit input[type="submit"]:hover {
+	background-color: #4cae4c;
+}
+
+.comment-form .required {
+	display: none;
+}
+
+.comment-form {
+	margin-bottom: 48px;
+
+	p {
+		margin: 0px;
+	}
+
+	label {
+		font-family: "Poppins";
+		font-size: 12px;
+		font-weight: 600;
+		color: #151515;
+	}
+}
+
+.comments-area {
+	.title-comments {
+		margin-top: 0px;
+		margin-bottom: 16px;
+	}
+
+	// .title-comments {
+	// 	//display: none;
+	// }
+}
+
+//
+.comment-list {
+	.comment {
+		.comment-body {
+			padding: 16px !important;
+			border: 1px solid #d1d1d1 !important;
+			border-radius: 12px;
+
+			.comment-meta {
+				align-items: center;
+
+				.comment-author {
+					display: flex;
+					align-items: center;
+
+					img {
+						position: relative !important;
+					}
+				}
+			}
+		}
+	}
+
+	.comment-author .says {
+		display: none;
+	}
+}

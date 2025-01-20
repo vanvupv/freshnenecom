@@ -1,0 +1,48 @@
+// Start Breadcrumbs
+.breadcrumbs {
+	position: relative;
+
+	a,
+	.current {
+		color: #a9a9a9 !important;
+		//
+		//styleName: Caption/Default;
+		font-family: "Open Sans";
+		font-size: 12px;
+		font-weight: 400;
+
+		&.current {
+			color: #151515 !important;
+		}
+	}
+
+	a {
+		text-decoration: none;
+
+		&:hover {
+			color: #a9a9a9 !important;
+			text-decoration: underline;
+		}
+	}
+
+	.icon {
+		padding: 0px 8px;
+		// margin: 0px 8px;
+		margin-right: 8px;
+		position: relative;
+
+		svg {
+			width: 5px;
+			height: 16px;
+			min-width: 5px;
+			position: absolute;
+			top: 2px;
+			left: 8px;
+
+			path {
+				stroke: #d1d1d1;
+			}
+		}
+	}
+}
+// End Breadcrumbs

@@ -4,7 +4,6 @@ $product_id = get_the_ID();
 ?>
 
 <article class="productItem" data-mh="productItem">
-
     <a href="<?php the_permalink(); ?>" class="imgGroup productItem__img" aria-label="<?php the_title(); ?>">
         <?php
         if ($product->is_on_sale()):
