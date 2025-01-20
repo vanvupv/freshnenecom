@@ -16,8 +16,9 @@ function register_custom_widgets($widgets_manager)
     require_once TEMPLATE_PATH . 'related_post.php';
     require_once TEMPLATE_PATH . 'breadcrumb.php';
     require_once TEMPLATE_PATH . 'post_banner.php';
+    require_once TEMPLATE_PATH . 'product_archive.php';
 
-    // Register widgets product_custom related_post
+    // Register widgets product_custom related_post product_archive
     $widgets_manager->register(new \Header_Widget());
     $widgets_manager->register(new \Duplicate_Widget());
     $widgets_manager->register(new \Search_Widget());
@@ -29,6 +30,7 @@ function register_custom_widgets($widgets_manager)
     $widgets_manager->register(new \Related_Post_Widget());
     $widgets_manager->register(new \Breadcrumb_Widget());
     $widgets_manager->register(new \Post_Banner_Widget());
+    $widgets_manager->register(new \Product_Archive_Widget());
 }
 add_action('elementor/widgets/register', 'register_custom_widgets');
 

@@ -1,0 +1,240 @@
+/* Tiêu đề danh mục */
+#categories-product {
+	.widget-title {
+		font-family: "Poppins";
+		font-size: 18px;
+		font-weight: 600;
+		color: #151515;
+		//
+		margin-bottom: 16px;
+	}
+
+	/* Danh sách danh mục */
+	.category-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		max-height: 155px;
+		overflow: scroll;
+		overflow-x: hidden;
+
+		&::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 0px #ffffff;
+			background-color: #ffffff;
+		}
+
+		&::-webkit-scrollbar {
+			width: 0px;
+			background-color: #ffffff;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #ffffff;
+		}
+
+		.cat-item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 12px;
+
+			&:last-child {
+				margin-bottom: 0px;
+			}
+
+			a {
+				font-family: "Open Sans";
+				font-size: 14px;
+				font-weight: 400;
+				text-decoration: none;
+				color: #151515;
+
+				&:hover {
+					color: #151515;
+					text-decoration: underline;
+				}
+			}
+
+			.product-count {
+				background-color: #f4f8ec; /* Màu nền xanh nhạt */
+				color: #6a983c; /* Màu chữ xanh lá */
+				font-family: "Poppins";
+				font-size: 12px;
+				font-weight: 600;
+				border-radius: 12px;
+				padding: 0px 8px;
+			}
+		}
+	}
+
+	// .category-list::-webkit-scrollbar-track {
+	// 	-webkit-box-shadow: inset 0 0 0px #ffffff;
+	// 	background-color: #ffffff;
+	// }
+
+	// .category-list::-webkit-scrollbar {
+	// 	width: 0px;
+	// 	background-color: #ffffff;
+	// }
+
+	// .category-list::-webkit-scrollbar-thumb {
+	// 	background-color: #ffffff;
+	// }
+}
+
+//
+/* Container styling */
+.product-tags-checkboxes {
+	font-family: Arial, sans-serif;
+	margin-top: 20px;
+}
+
+.product-tags-checkboxes h3 {
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+/* Label styling */
+.product-tags-checkboxes label {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	cursor: pointer;
+	user-select: none;
+	margin-bottom: 8px;
+	color: #333;
+}
+
+/* Custom checkbox */
+input[type="radio"],
+.product-tags-checkboxes input[type="checkbox"] {
+	appearance: none; /* Loại bỏ checkbox mặc định */
+	width: 18px;
+	height: 18px;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	margin-right: 8px;
+	transition: all 0.2s ease-in-out;
+	position: relative;
+	cursor: pointer;
+}
+
+/* Checkbox checked state */
+input[type="radio"]:checked,
+.product-tags-checkboxes input[type="checkbox"]:checked {
+	background-color: #689f38; /* Green background */
+	border-color: #689f38;
+}
+
+input[type="radio"]:after,
+.product-tags-checkboxes input[type="checkbox"]:checked::after {
+	content: "";
+	position: absolute;
+	top: 2px;
+	left: 6px;
+	width: 6px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
+
+/* Hover effect */
+input[type="radio"]:hover,
+.product-tags-checkboxes input[type="checkbox"]:hover {
+	border-color: #999;
+}
+
+/* Tag count styling */
+.product-tags-checkboxes label span {
+	margin-left: auto;
+	font-size: 12px;
+	color: #666;
+}
+
+///* Price slider container */
+.price-slider {
+	font-family: Arial, sans-serif;
+	margin: 20px 0;
+}
+
+.price-slider label {
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	margin-bottom: 10px;
+	display: block;
+}
+
+/* Slider range container */
+#slider-range {
+	position: relative;
+	height: 6px;
+	background: #e0e0e0;
+	border-radius: 3px;
+	margin: 10px 0 15px;
+}
+
+#slider-range::before {
+	content: "";
+	position: absolute;
+	height: 6px;
+	background: #689f38; /* Green for the active range */
+	border-radius: 3px;
+	z-index: 1;
+	transition: all 0.2s ease;
+}
+
+/* Range handles */
+#slider-range .ui-slider-handle {
+	width: 16px;
+	height: 16px;
+	background: #fff;
+	border: 2px solid #ccc;
+	border-radius: 50%;
+	z-index: 2;
+	cursor: pointer;
+	position: absolute;
+	top: -6px;
+	transition: all 0.2s ease;
+}
+
+#slider-range .ui-slider-handle:hover {
+	border-color: #689f38; /* Green hover border */
+}
+
+/* Min and max labels */
+#slider-range-labels {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	color: #666;
+	margin-top: -5px;
+}
+
+/* Min/Max input styles */
+.price-range-inputs {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 15px;
+}
+
+.price-range-inputs input {
+	width: 48%;
+	height: 36px;
+	border: 1px solid #ccc;
+	border-radius: 6px;
+	padding: 5px 10px;
+	font-size: 14px;
+	color: #333;
+	text-align: center;
+	background-color: #f9f9f9;
+}
+
+.price-range-inputs input:focus {
+	border-color: #689f38; /* Green border on focus */
+	outline: none;
+}
