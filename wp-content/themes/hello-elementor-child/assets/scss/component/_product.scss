@@ -72,6 +72,18 @@
 					display: inline-flex;
 					flex-direction: column-reverse;
 
+					.amount {
+						font-family: "Poppins";
+						font-size: 18px;
+						font-weight: 600;
+						text-decoration: none;
+						text-align: left;
+						text-underline-position: from-font;
+						text-decoration-skip-ink: none;
+						color: #151515;
+					}
+
+					//
 					del,
 					ins {
 						text-decoration: none;
@@ -114,8 +126,10 @@
 				font-weight: 700;
 				color: #ffffff;
 
-				a {
+				a.button {
 					color: #ffffff;
+					background-color: #6a983c;
+					padding: 0px;
 				}
 			}
 		}

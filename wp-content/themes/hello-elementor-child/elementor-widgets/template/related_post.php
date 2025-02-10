@@ -63,7 +63,7 @@ class Related_Post_Widget extends \Elementor\Widget_Base
                         while ($query->have_posts()) {
                             $query->the_post(); ?>
                             <div class="col-3">
-                                <?php include CHILD_PATH . '/template-parts/post.php'; // Hiển thị sản phẩm theo ID ?>
+                                <?php get_template_part('template-parts/post'); // Hiển thị sản phẩm theo ID ?>
                             </div>
                         <?php } ?>
                     </div>

@@ -89,7 +89,6 @@ class Product_Archive_Widget extends \Elementor\Widget_Base
             );
         }
 
-
         // if (!empty($_GET['rating'] && intval($_GET['rating']) > 0)) {
         //     $rating = intval($_GET['rating']);
         //     $args['meta_query'][] = array(
@@ -113,7 +112,6 @@ class Product_Archive_Widget extends \Elementor\Widget_Base
                 ),
             );
         }
-
 
         // Kết hợp tax_query nếu tồn tại nhiều điều kiện
         if (!empty($args['tax_query'])) {
@@ -159,10 +157,10 @@ class Product_Archive_Widget extends \Elementor\Widget_Base
         <div class="secSpace">
             <div class="product_cat_wrap">
                 <div class="container">
-                    <?php wp_breadcrumbs(); ?>
+                    <?php // wp_breadcrumbs(); ?>
 
                     <h1 class="h2 product_cat_title">
-                        <?php woocommerce_page_title(); ?>
+                        <?php // woocommerce_page_title(); ?>
                     </h1>
 
                     <div class="catalog_ordering">
@@ -175,7 +173,7 @@ class Product_Archive_Widget extends \Elementor\Widget_Base
 
                     <div class="row">
                         <div class="col-lg-3">
-                            <?php include CHILD_PATH . '/template-parts/sidebar-product.php'; // Hiển thị sản phẩm theo ID ?>
+                            <?php get_template_part('template-parts/sidebar-product'); // Hiển thị sản phẩm theo ID ?>
                         </div>
                         <div class="col-lg-9">
                             <?php if ($query->have_posts()): ?>
@@ -184,14 +182,14 @@ class Product_Archive_Widget extends \Elementor\Widget_Base
                                     while ($query->have_posts()):
                                         $query->the_post(); ?>
                                         <div class="col-lg-4 col-md-6">
-                                            <?php include CHILD_PATH . '/template-parts/product.php'; ?>
+                                            <?php get_template_part('template-parts/product'); ?>
                                         </div>
                                         <?php
                                     endwhile;
                                     ?>
                                 </div>
                                 <?php
-                                echo '<div class="pagination">';
+                                echo '<div class="pagination_custom">';
                                 echo paginate_links(
                                     array(
                                         'total' => $query->max_num_pages,

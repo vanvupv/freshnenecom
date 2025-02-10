@@ -1,0 +1,10 @@
+.favorite_posts {
+	display: inline-flex;
+	justify-content: start;
+	align-items: center;
+	gap: 6px;
+
+	&.active {
+		background-image: url("data:image/svg+xml,%3Csvg width='28' height='29' viewBox='0 0 28 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2.33337 11.1601C2.33337 16.8335 7.02271 19.8568 10.4554 22.5628C11.6667 23.5177 12.8334 24.4168 14 24.4168C15.1667 24.4168 16.3334 23.5177 17.5447 22.5628C20.9774 19.8568 25.6667 16.8335 25.6667 11.1601C25.6667 5.48665 19.2499 1.46316 14 6.91753C8.75023 1.46316 2.33337 5.48665 2.33337 11.1601Z' fill='%23FF3974'/%3E%3C/svg%3E%0A") !important;
+	}
+}

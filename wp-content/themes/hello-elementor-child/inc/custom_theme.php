@@ -269,3 +269,87 @@ add_filter('comment_edit_link', 'remove_comment_edit_link');
 // }
 // add_filter('comment_text', 'add_job_title_to_comment_meta', 10, 2);
 
+//
+add_filter('woocommerce_product_meta_end', 'custom_product_meta_display', 10, 1);
+
+function custom_product_meta_display()
+{
+    global $product;
+
+    // Dữ liệu tùy chỉnh - ví dụ giá trị cụ thể
+    $freshness = '1 days old';
+    $buy_by = 'pcs, kgs, box, pack';
+    $delivery_time = 'in 2 days';
+    $delivery_area = 'Czech republic';
+
+    // Hiển thị nội dung
+    echo '<div class="custom-product-meta">';
+    echo '<p><strong>Freshness:</strong> ' . esc_html($freshness) . '</p>';
+    echo '<p><strong>Buy by:</strong> ' . esc_html($buy_by) . '</p>';
+    echo '<p><strong>Delivery:</strong> ' . esc_html($delivery_time) . '</p>';
+    echo '<p><strong>Delivery area:</strong> ' . esc_html($delivery_area) . '</p>';
+    echo '</div>';
+}
+
+//
+add_action('wp_ajax_search_products', 'ajax_search_products');
+add_action('wp_ajax_nopriv_search_products', 'ajax_search_products');
+
+function ajax_search_products()
+{
+    // Kiểm tra nonce bảo mật
+    check_ajax_referer('search_products_nonce', 'security');
+
+    $keyword = sanitize_text_field($_POST['keyword']);
+    $category = sanitize_text_field($_POST['category']);
+
+    // Truy vấn sản phẩm
+    $args = [
+        'post_type' => 'product',
+        'posts_per_page' => 6, // Lấy 6 sản phẩm để kiểm tra số lượng
+        'orderby' => 'title',
+        's' => $keyword,
+    ];
+
+    if (!empty($category)) {
+        $args['tax_query'] = [
+            [
+                'taxonomy' => 'product_cat',
+                'field' => 'slug',
+                'terms' => $category,
+            ],
+        ];
+    }
+
+    $query_product = new WP_Query($args);
+
+    if ($query_product->have_posts()) {
+        $product_count = $query_product->found_posts; // Tổng số sản phẩm thỏa mãn
+        $display_count = 0; // Đếm số sản phẩm hiển thị
+
+        while ($query_product->have_posts()) {
+            $query_product->the_post();
+
+            // Chỉ hiển thị tối đa 5 sản phẩm
+            if ($display_count < 5) {
+                include CHILD_PATH . '/template-parts/search-product.php';
+            }
+            $display_count++;
+        }
+
+        // Nếu có nhiều hơn 5 sản phẩm, hiển thị liên kết "Xem thêm"
+        if ($product_count > 5) {
+            echo '<div class="view-more-link">';
+            echo '<a href="' . get_site_url() . '/?s=' . urlencode($keyword) . '&post_type=product&product_cat=' . $category . '">';
+            echo sprintf(__('Xem thêm %d sản phẩm', 'child_theme'), $product_count - 5);
+            echo '</a>';
+            echo '</div>';
+        }
+    } else {
+        echo '<p>' . __('No products found.', 'child_theme') . '</p>';
+    }
+
+    wp_reset_postdata();
+
+    wp_die();
+}

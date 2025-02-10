@@ -108,6 +108,7 @@ function disable_plugins_update($value)
 require CHILD_PATH . '/inc/security.php';
 require CHILD_PATH . '/inc/ajax.php';
 require CHILD_PATH . '/inc/custom_theme.php';
+require CHILD_PATH . '/inc/favorite_posts.php'; // favorite_posts
 
 // load widgets library
 function load_custom_widgets()

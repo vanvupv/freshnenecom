@@ -1,0 +1,13 @@
+.catalog_ordering {
+	.woocommerce-result-count {
+		float: none !important;
+	}
+
+	.woocommerce-ordering {
+		float: none !important;
+	}
+	//
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}

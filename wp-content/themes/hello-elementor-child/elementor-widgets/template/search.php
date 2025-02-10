@@ -34,81 +34,20 @@ class Search_Widget extends \Elementor\Widget_Base
             ]
         );
 
-        // Thêm ô select để chọn post type
-        $this->add_control(
-            'post_type',
-            [
-                'label' => __('Select Post Type', 'child_theme'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 'post',
-                'options' => $this->get_post_types()
-            ]
-        );
-
-        $this->add_control(
-            'posts_per_page',
-            [
-                'label' => __('Number of Posts', 'child_theme'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'options' => [
-                    10 => '10',
-                    15 => '15',
-                    20 => '20',
-                    25 => '25',
-                    30 => '30',
-                    35 => '35',
-                    40 => '40',
-                    45 => '45',
-                    50 => '50',
-                ],
-                'default' => '10',
-            ]
-        );
-
-        $this->add_responsive_control(
-            'columns',
-            [
-                'label' => __('Number of Columns', 'child_theme'),
-                'type' => \Elementor\Controls_Manager::SELECT,
-                'default' => 3,
-                'options' => [
-                    1 => __('1 Columns', 'child_theme'),
-                    2 => __('2 Columns', 'child_theme'),
-                    3 => __('3 Columns', 'child_theme'),
-                    4 => __('4 Columns', 'child_theme'),
-                    6 => __('6 Columns', 'child_theme'),
-                    12 => __('12 Columns', 'child_theme'),
-                ],
-                'devices' => ['desktop', 'tablet', 'mobile'],
-                'device_default' => [
-                    'desktop' => 3,
-                    'tablet' => 2,
-                    'mobile' => 1,
-                ],
-            ]
-        );
-
-        $this->add_control(
-            'enable_pagination',
-            [
-                'label' => __('Enable Pagination', 'child_theme'),
-                'type' => \Elementor\Controls_Manager::SWITCHER,
-                'label_on' => __('Yes', 'child_theme'),
-                'label_off' => __('No', 'child_theme'),
-                'return_value' => 'yes',
-                'default' => 'yes',
-            ]
-        );
 
         $this->end_controls_section();
     }
 
-    private function get_post_types()
+    private function get_product_categories()
     {
-        $post_types = get_post_types(['public' => true], 'objects');
-        $options = [];
-        foreach ($post_types as $post_type) {
-            $options[$post_type->name] = $post_type->label;
+        $categories = get_terms([
+            'taxonomy' => 'product_cat',
+            'hide_empty' => false,
+        ]);
+
+        $options = ['' => __('All categories', 'child_theme')];
+        foreach ($categories as $category) {
+            $options[$category->slug] = $category->name;
         }
         return $options;
     }
@@ -116,27 +55,77 @@ class Search_Widget extends \Elementor\Widget_Base
     protected function render()
     {
         $settings = $this->get_settings_for_display();
+        $categories = $this->get_product_categories();
         ?>
-        <div class="search-container">
-            <div class="dropdown">
-                <select>
-                    <option>All categories</option>
-                    <option>Category 1 Category 1</option>
-                    <option>Category 2</option>
-                    <option>Category 3</option>
+        <div class="search-bar-container">
+            <form action="<?php echo esc_url(home_url('/')); ?>" method="GET">
+                <!-- Input tìm kiếm -->
+                <input type="text" name="s" id="search-input" class="search-input"
+                    placeholder="<?php _e('Search products...', 'child_theme'); ?>" />
+
+                <!-- Dropdown danh mục -->
+                <select name="category" id="search-category" class="search-category">
+                    <option value=""><?php _e('All Categories', 'child_theme'); ?></option>
+                    <?php foreach ($categories as $slug => $name): ?>
+                        <option value="<?php echo esc_attr($slug); ?>">
+                            <?php echo esc_html($name); ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
-            </div>
-            <input type="text" class="search-input" placeholder="Search Products, categories...">
-            <button type="submit" class="search-button"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M9.19303 11.4333C11.7704 11.4333 13.8597 9.34394 13.8597 6.76661C13.8597 4.18928 11.7704 2.09995 9.19303 2.09995C6.61571 2.09995 4.52637 4.18928 4.52637 6.76661C4.52637 9.34394 6.61571 11.4333 9.19303 11.4333Z"
-                        stroke="#151515" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="bevel" />
-                    <path d="M5.81319 10.24L2.68652 13.3667" stroke="#151515" stroke-width="1.5" stroke-linecap="round"
-                        stroke-linejoin="bevel" />
-                </svg>
-            </button>
+
+                <!-- Kết quả tìm kiếm -->
+                <div id="search-results" class="search-results"></div>
+            </form>
         </div>
         <?php
     }
 }
+
+add_action('wp_footer', function () {
+    ?>
+    <script>
+        (function ($) {
+            // Hàm dùng chung để gọi AJAX
+            function performSearch() {
+                const keyword = $('#search-input').val();
+                const category = $('#search-category').val();
+
+                // Chỉ thực hiện AJAX khi keyword >= 3 ký tự hoặc có danh mục được chọn
+                if (keyword.length >= 3 || category !== '') {
+                    $.ajax({
+                        url: '<?php echo admin_url('admin-ajax.php'); ?>',
+                        method: 'POST',
+                        data: {
+                            action: 'search_products',
+                            security: '<?php echo wp_create_nonce('search_products_nonce'); ?>',
+                            keyword: keyword,
+                            category: category,
+                        },
+                        beforeSend: function () {
+                            $('#search-results').html('<p>Loading...</p>');
+                        },
+                        success: function (response) {
+                            $('#search-results').html(response);
+                        },
+                        error: function () {
+                            $('#search-results').html('<p>Error loading results.</p>');
+                        },
+                    });
+                } else {
+                    $('#search-results').html('');
+                }
+            }
+
+            // Lắng nghe sự kiện trên input tìm kiếm
+            $('#search-input').on('input', function () {
+                performSearch();
+            });
+
+            // Lắng nghe sự kiện thay đổi trên dropdown danh mục
+            $('#search-category').on('change', function () {
+                performSearch();
+            });
+        })(jQuery);
+    </script>
+    <?php
+});
